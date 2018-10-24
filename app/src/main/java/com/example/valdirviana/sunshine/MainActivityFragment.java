@@ -1,13 +1,21 @@
 package com.example.valdirviana.sunshine;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,23 +70,55 @@ public class MainActivityFragment extends Fragment {
         ListView listView =  (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
 
-        // These two need to be declared outside the try/catch
-        // so that they can be closed in the finally block.
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        // Will contain the raw JSON response as a string.
-        String forecastJsonStr = null;
-        try {
+
+
+            RequestQueue queue = Volley.newRequestQueue(this.getContext());
+            String url ="http://api.openweathermap.org/data/2.5/forecast?mode=json&units=metric&cnt=7&q=94043&APPID=27c020bfcbc4077c04db7b658c3cf4ba";
+
+            // Request a string response from the provided URL.
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // Display the first 500 characters of the response string.
+                            //mTextView.setText("Response is: "+ response);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //mTextView.setText("That didn't work!");
+                }
+            });
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+
+
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+            // Will contain the raw JSON response as a string.
+            String forecastJsonStr = null;
+            /*try {*/
+            //final TextView mTextView = (TextView) rootView.findViewById(R.id.text);
+
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are avaiable at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7";
+            /*
+            String baseUrl = "http://api.openweathermap.org/data/2.5/forecast?q=94043&mode=json&units=metric&cnt=7";
             String apiKey = "&APPID=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
             URL url = new URL(baseUrl.concat(apiKey));
+            //URL url = new URL("https://google.com.br");
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
+            urlConnection.setConnectTimeout(100000);
+            urlConnection.setReadTimeout(100000);
+            urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.connect();
+
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
@@ -99,8 +139,11 @@ public class MainActivityFragment extends Fragment {
                 return null;
             }
             forecastJsonStr = buffer.toString();
-        } catch (IOException e) {
-            Log.e("PlaceholderFragment", "Error ", e);
+
+            */
+            /*
+        } catch (Exception e) {
+            Log.e("PlaceholderFragmentQQ", "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
             return null;
@@ -115,9 +158,12 @@ public class MainActivityFragment extends Fragment {
                     Log.e("PlaceholderFragment", "Error closing stream", e);
                 }
             }
+
         }
+        */
 
 
         return rootView;
     }
+
 }
