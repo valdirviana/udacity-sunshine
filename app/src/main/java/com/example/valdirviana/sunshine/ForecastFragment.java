@@ -12,9 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.text.format.Time;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,32 +107,13 @@ public class ForecastFragment extends Fragment {
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
 
-
-            /*
-            RequestQueue queue = Volley.newRequestQueue(this.getContext());
-            String url ="http://api.openweathermap.org/data/2.5/forecast?mode=json&units=metric&cnt=7&q=94043&APPID=27c020bfcbc4077c04db7b658c3cf4ba";
-
-            // Request a string response from the provided URL.
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            // Display the first 500 characters of the response string.
-                            //mTextView.setText("Response is: "+ response);
-                            Log.i("PlaceholderFragment", response);
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //mTextView.setText("That didn't work!");
-                    Log.e("PlaceholderFragment123", "Error closing stream123", error);
-                }
-            });
-
-            // Add the request to the RequestQueue.
-            queue.add(stringRequest);
-            */
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecast = mForecastAdapter.getItem(position);
+                Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
