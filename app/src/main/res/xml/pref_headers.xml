@@ -1,4 +1,7 @@
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
 
     <!-- These settings headers are only used on tablets. -->
 
