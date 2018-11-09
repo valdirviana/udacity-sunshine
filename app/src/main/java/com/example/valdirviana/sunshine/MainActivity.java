@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,6 +34,56 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Log.d(LOG_TAG, "onCreate Life Cycle");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(LOG_TAG, "onStop Life Cycle");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(LOG_TAG, "onPause Life Cycle");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TAG, "onResume Life Cycle");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(LOG_TAG, "onStart Life Cycle");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG, "onStart Life Cycle");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(LOG_TAG, "onSaveInstanceStates Life Cycle");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(LOG_TAG, "onRestoreInstanceState Life Cycle");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        Log.d(LOG_TAG, "onRestoreInstanceState 2 params Life Cycle");
     }
 
     @Override
